@@ -6,7 +6,7 @@ import pickle
 import lightgbm as lgb
 import matplotlib.pyplot as plt
 from util_ml import pivot_df_for_dengram, filedownload
-# from util_ml import datasetLoader
+from util_ml import datasetLoader
 
 def app():
     st.title('demand visualizer')
@@ -54,16 +54,16 @@ def app():
     if uploaded_file is not None:
         df_true = pd.read_csv(uploaded_file)
 
-    # # Access to GCP
-    # st.sidebar.subheader('... Or get data by SQL')
-    # SQL_input = "SELECT * \n FROM {DATASET.TABLE} \n ORDER BY {T1, T2}\n"
+    # Access to GCP
+    st.sidebar.subheader('... Or get data by SQL')
+    SQL_input = "SELECT * \n FROM {DATASET.TABLE} \n ORDER BY {T1, T2}\n"
 
-    # SQL_input = st.sidebar.text_area("SQL input", SQL_input, height=150)
-    # dataset_loader = datasetLoader()
+    SQL_input = st.sidebar.text_area("SQL input", SQL_input, height=150)
+    dataset_loader = datasetLoader()
 
-    # if st.sidebar.button('Send SQL'):
-    #     df_true = dataset_loader.load(SQL_input)
-    #     st.session_state['df_true'] = df_true
+    if st.sidebar.button('Send SQL'):
+        df_true = dataset_loader.load(SQL_input)
+        st.session_state['df_true'] = df_true
 
     if st.button('SHAP'):
         st.set_option('deprecation.showPyplotGlobalUse', False)

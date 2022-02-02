@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from PIL import Image
-# from util_ml import datasetLoader
+from util_ml import datasetLoader
 
 def app():
     st.title('demand model creator')
@@ -41,16 +41,16 @@ def app():
     if 'classification_col' not in st.session_state:
         st.session_state['classification_col'] = None
 
-    # # Access to GCP
-    # st.sidebar.subheader('... Or get data by SQL')
-    # SQL_input = "SELECT * \n FROM {DATASET.TABLE} \n ORDER BY {T1, T2}\n"
+    # Access to GCP
+    st.sidebar.subheader('... Or get data by SQL')
+    SQL_input = "SELECT * \n FROM {DATASET.TABLE} \n ORDER BY {T1, T2}\n"
 
-    # SQL_input = st.sidebar.text_area("SQL input", SQL_input, height=150)
-    # dataset_loader = datasetLoader()
+    SQL_input = st.sidebar.text_area("SQL input", SQL_input, height=150)
+    dataset_loader = datasetLoader()
 
-    # if st.sidebar.button('Send SQL'):
-    #     df = dataset_loader.load(SQL_input)
-    #     st.session_state['input_df'] = df
+    if st.sidebar.button('Send SQL'):
+        df = dataset_loader.load(SQL_input)
+        st.session_state['input_df'] = df
 
     def conventional_features(_df):
         # よく使われる特徴量を計算

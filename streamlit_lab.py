@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from util_ml import get_dengram, add_one_item_in_dendrogram, plot_line_or_band, pivot_df_for_dengram, filedownload
-# from util_ml import datasetLoader
+from util_ml import datasetLoader
 
 # Download clustering result
 # https://discuss.streamlit.io/t/how-to-download-file-in-streamlit/1806
@@ -44,18 +44,18 @@ def app():
         df = None
         df_clustering_input = None
     
-    # # Access to GCP
-    # st.sidebar.subheader('... Or get data by SQL')
-    # SQL_input = "SELECT * \n FROM {DATASET.TABLE} \n ORDER BY {T1, T2}\n"
+    # Access to GCP
+    st.sidebar.subheader('... Or get data by SQL')
+    SQL_input = "SELECT * \n FROM {DATASET.TABLE} \n ORDER BY {T1, T2}\n"
 
-    # SQL_input = st.sidebar.text_area("SQL input", SQL_input, height=150)
-    # dataset_loader = datasetLoader()
+    SQL_input = st.sidebar.text_area("SQL input", SQL_input, height=150)
+    dataset_loader = datasetLoader()
 
-    # if st.sidebar.button('Send SQL'):
-    #     df = dataset_loader.load(SQL_input)
-    #     st.session_state['input_df'] = df
-    #     if len(df[df.iloc[:, [0,1,2]].duplicated()])>0:
-    #         st.error('Warning: Please check if duplicated id/T1/T2 rows exist...')
+    if st.sidebar.button('Send SQL'):
+        df = dataset_loader.load(SQL_input)
+        st.session_state['input_df'] = df
+        if len(df[df.iloc[:, [0,1,2]].duplicated()])>0:
+            st.error('Warning: Please check if duplicated id/T1/T2 rows exist...')
 
     # Displays full user input dataframe
     st.subheader('1a. User Input')

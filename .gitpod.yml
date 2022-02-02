@@ -3,13 +3,7 @@ tasks:
     init: |
       pip install -r requirements.txt
       cp ipaexg.ttf /home/gitpod/.pyenv/versions/3.8.12/lib/python3.8/site-packages/matplotlib/mpl-data/fonts/ttf/
-      wget https://www.jpx.co.jp/markets/statistics-equities/misc/tvdivq0000001vg2-att/data_j.xls
       gp sync-done streamlit
-  - name: streamlit run
-    init: |
-      gp sync-await streamlit
-      streamlit run streamlit_ml.py
-    openMode: split-right
   - name: jupyter notebook run
     init: |
       gp sync-await streamlit
@@ -18,6 +12,22 @@ tasks:
       echo -e '\nc.NotebookApp.contents_manager_class = "jupytext.TextFileContentsManager"' >> ~/.jupyter/jupyter_notebook_config.py
       echo -e '\nc.ContentsManager.default_jupytext_formats = "ipynb,py"' >> ~/.jupyter/jupyter_notebook_config.py
       jupyter notebook --ip=*
+    openMode: split-right
+  - name: install google-cloud-sdk & gcloud configs
+    init: |
+      curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-358.0.0-linux-x86_64.tar.gz
+      tar -xvf google-cloud-sdk-358.0.0-linux-x86_64.tar.gz
+      ./google-cloud-sdk/install.sh
+      rm google-cloud-sdk-358.0.0-linux-x86_64.tar.gz
+      . ~/.bashrc # exec bash
+      gcloud auth login
+      read -p "Enter Your GCP Project ID: " GCP_ID
+      gcloud config set project $GCP_ID
+      export GCLOUD_PROJECT=$GCP_ID
+      eval "echo -e '\nexport GCLOUD_PROJECT="$GCP_ID"' >> ~/.bashrc"
+      gcloud auth application-default login
+      pip install -r requirements2.txt
+      streamlit run streamlit_ml.py
     openMode: split-right
 vscode:
   extensions:
