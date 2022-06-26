@@ -37,13 +37,13 @@ def app():
 
     if uploaded_file is not None:
         df = pd.read_csv(uploaded_file)
-        st.session_state['input_df'] = df 
-        if len(df[df.iloc[:, [0,1,2]].duplicated()])>0:
+        st.session_state['input_df'] = df
+        if len(df[df.iloc[:, [0, 1, 2]].duplicated()]) > 0:
             st.error('Warning: Please check if duplicated id/T1/T2 rows exist...')
     else:
         df = None
         df_clustering_input = None
-    
+
     # # Access to GCP
     # st.sidebar.subheader('... Or get data by SQL')
     # SQL_input = "SELECT * \n FROM {DATASET.TABLE} \n ORDER BY {T1, T2}\n"
@@ -112,7 +112,8 @@ def app():
     if st.button('Plot by dendrogram cluster'):
         #---------------------------------#
         # Page layout (continued)
-        # Divide page to 3 columns (col1 = sidebar, col2 and col3 = page contents)
+        # Divide page to 3 columns (col1 = sidebar, col2 and col3 = page
+        # contents)
         col1, col2 = st.columns((0.97, 1))
 
         st.subheader('Cluster Plot')
@@ -164,5 +165,5 @@ def app():
         st.subheader('Clustering result for all items')
         df_cluster = pd.concat([df_short_tf, df_long_tf])
         st.write(df_cluster)
-        st.session_state['input_df'] = pd.merge(df, df_cluster.iloc[:, [0,1]])
+        st.session_state['input_df'] = pd.merge(df, df_cluster.iloc[:, [0, 1]])
         st.markdown(filedownload(df_cluster), unsafe_allow_html=True)
