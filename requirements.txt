@@ -1,6 +1,6 @@
 altair==4.1.0
 bs4==0.0.1
-flake8==3.9.2
+# flake8==3.9.2
 fonttools==4.28.4
 matplotlib==3.5.1
 MultiApp==1.0

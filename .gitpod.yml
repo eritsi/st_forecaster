@@ -3,7 +3,8 @@ tasks:
     init: |
       pip install -r requirements.txt
       pip install jupytext openpyxl optuna pandas_gbq scikit-learn lightgbm
-      cp ipaexg.ttf /home/gitpod/.pyenv/versions/&{python -V| awk '{l=$2} END {print l}'}/lib/python3.8/site-packages/matplotlib/mpl-data/fonts/ttf/
+      PY_VERSION=$(python -V| awk '{l=$2} END {print l}')
+      cp ipaexg.ttf /home/gitpod/.pyenv/versions/$PY_VERSION/lib/python3.8/site-packages/matplotlib/mpl-data/fonts/ttf/
       gp sync-done streamlit
   - name: streamlit run
     init: |
