@@ -2,7 +2,8 @@ tasks:
   - name: install google-cloud-sdk & gcloud configs
     init: |
       pip install -r requirements.txt
-      cp ipaexg.ttf /home/gitpod/.pyenv/versions/3.8.12/lib/python3.8/site-packages/matplotlib/mpl-data/fonts/ttf/
+      pip install jupytext openpyxl optuna pandas_gbq scikit-learn lightgbm
+      cp ipaexg.ttf /home/gitpod/.pyenv/versions/&{python -V| awk '{l=$2} END {print l}'}/lib/python3.8/site-packages/matplotlib/mpl-data/fonts/ttf/
       gp sync-done streamlit
   - name: streamlit run
     init: |
@@ -12,7 +13,6 @@ tasks:
   - name: jupyter notebook run
     init: |
       gp sync-await streamlit
-      pip install jupytext openpyxl optuna pandas_gbq scikit-learn lightgbm
       jupyter notebook --generate-config
       echo -e '\nc.NotebookApp.contents_manager_class = "jupytext.TextFileContentsManager"' >> ~/.jupyter/jupyter_notebook_config.py
       echo -e '\nc.ContentsManager.default_jupytext_formats = "ipynb,py"' >> ~/.jupyter/jupyter_notebook_config.py
